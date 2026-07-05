@@ -20,8 +20,9 @@ const DEFAULT_GRADIENT = "linear-gradient(160deg,#d9d3c0,#c4bca4)";
 
 /**
  * Image inside a fixed frame. The design layers photos over warm beige
- * gradients; if a photo is absent the gradient remains, so the layout still
- * reads as intentional. Drop matching files into /public/images to enable them.
+ * gradients; the photo fades in only once it has successfully loaded, so a
+ * missing file leaves just the gradient + caption — no broken-image artifact.
+ * Drop matching files into /public/images to enable the photography.
  */
 export function MediaFrame({
   src,
@@ -32,21 +33,20 @@ export function MediaFrame({
   className = "",
   style,
 }: MediaFrameProps) {
-  const [broken, setBroken] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <div
       className={`relative overflow-hidden ${className}`}
       style={{ background: gradient, ...style }}
     >
-      {!broken && (
-        <img
-          src={src}
-          alt={alt}
-          onError={() => setBroken(true)}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      )}
+      <img
+        src={src}
+        alt={alt}
+        onLoad={() => setLoaded(true)}
+        className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+        style={{ opacity: loaded ? 1 : 0 }}
+      />
 
       {verticalAccent && (
         <span
@@ -62,9 +62,7 @@ export function MediaFrame({
       )}
 
       {caption && (
-        <span
-          className="absolute bottom-5 left-5 bg-cream/80 px-2 py-[3px] text-[11px] tracking-[0.2em] text-body"
-        >
+        <span className="absolute bottom-5 left-5 bg-cream/80 px-2 py-[3px] text-[11px] tracking-[0.2em] text-body">
           {caption}
         </span>
       )}
