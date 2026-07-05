@@ -1,13 +1,19 @@
+import Link from "next/link";
 import { MediaFrame } from "@/components/media-frame";
-import { SectionHeading } from "@/components/section-heading";
+import { ROUTES } from "@/lib/site-routes";
+
+export const metadata = {
+  title: "Services & care · サービス | St Monica",
+  description:
+    "Care shaped around each person — daily living support, health & nursing, and life & joy.",
+};
 
 type Service = {
   index: string;
   title: string;
   body: string;
   items: string[];
-  media: { src: string; alt: string; caption: string; gradient?: string };
-  /** Whether the media sits on the left (image-first) or right. */
+  media: { src: string; alt: string; gradient?: string };
   imageFirst: boolean;
 };
 
@@ -22,7 +28,7 @@ const SERVICES: Service[] = [
       "Mobility & gentle exercise · 歩行・機能訓練",
       "Laundry & housekeeping · 洗濯・清掃",
     ],
-    media: { src: "/images/svc-morning.png", alt: "朝の支度", caption: "朝の支度" },
+    media: { src: "/images/svc-morning.png", alt: "朝の支度" },
     imageFirst: false,
   },
   {
@@ -38,7 +44,6 @@ const SERVICES: Service[] = [
     media: {
       src: "/images/svc-care.png",
       alt: "看護スタッフ",
-      caption: "看護スタッフ",
       gradient: "linear-gradient(160deg,#cfc7b1,#bab097)",
     },
     imageFirst: true,
@@ -53,26 +58,28 @@ const SERVICES: Service[] = [
       "Music, calligraphy & tea · 音楽・書道・お茶",
       "Family gatherings · ご家族との集い",
     ],
-    media: { src: "/images/svc-calligraphy.png", alt: "書道の時間", caption: "書道の時間" },
+    media: { src: "/images/svc-calligraphy.png", alt: "書道の時間" },
     imageFirst: false,
   },
 ];
 
 function ServiceRow({ service }: { service: Service }) {
   const text = (
-    <div className="px-6 py-16 sm:px-10 md:px-14">
-      <div className="mb-4 font-mincho text-[15px] text-sage">{service.index}</div>
-      <h3 className="m-0 mb-4 font-mincho text-[30px] font-medium">
+    <div className="px-6 py-16 sm:px-9 md:px-14">
+      <div className="mb-[18px] font-mincho text-[15px] text-sage">
+        {service.index}
+      </div>
+      <h2 className="m-0 mb-[18px] font-mincho text-[32px] font-medium">
         {service.title}
-      </h3>
-      <p className="m-0 mb-6 max-w-[440px] text-[14.5px] leading-[2] text-body">
+      </h2>
+      <p className="m-0 mb-[26px] max-w-[440px] text-[14.5px] leading-[2] text-body">
         {service.body}
       </p>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-[14px]">
         {service.items.map((item) => (
           <div
             key={item}
-            className="flex items-baseline gap-[14px] border-t border-line pt-3"
+            className="flex items-baseline gap-[14px] border-t border-line pt-[14px]"
           >
             <span className="font-mincho text-sage">—</span>
             <span className="text-[14px] text-body-2">{item}</span>
@@ -86,15 +93,14 @@ function ServiceRow({ service }: { service: Service }) {
     <MediaFrame
       src={service.media.src}
       alt={service.media.alt}
-      caption={service.media.caption}
       gradient={service.media.gradient}
-      className="min-h-[300px] md:min-h-[400px]"
+      className="min-h-[320px] md:min-h-[440px]"
     />
   );
 
   return (
     <section className="border-t border-line">
-      <div className="mx-auto grid max-w-[1200px] items-stretch md:grid-cols-2">
+      <div className="mx-auto grid max-w-[1240px] items-stretch md:grid-cols-2">
         {service.imageFirst ? (
           <>
             {media}
@@ -111,19 +117,19 @@ function ServiceRow({ service }: { service: Service }) {
   );
 }
 
-export function ServicesSection() {
+export default function ServicesPage() {
   return (
     <>
-      <section
-        id="services"
-        className="mx-auto max-w-[1200px] px-6 pt-20 sm:px-10"
-      >
-        <SectionHeading
-          eyebrow="Services & care · サービス"
-          title="Care shaped around each person."
-          subtitle="お一人おひとりに、寄り添うケアを。"
-        />
-        <div className="h-11" />
+      <section className="mx-auto max-w-[1240px] px-6 pt-[84px] pb-14 sm:px-9">
+        <div className="mb-[22px] text-[12px] uppercase tracking-[0.3em] text-sage">
+          Services &amp; care · サービス
+        </div>
+        <h1 className="m-0 mb-[10px] max-w-[820px] font-mincho text-[40px] font-medium leading-[1.25] sm:text-[52px]">
+          Care shaped around each person.
+        </h1>
+        <p className="m-0 font-mincho text-[24px] tracking-[0.08em] text-muted">
+          お一人おひとりに、寄り添うケアを。
+        </p>
       </section>
 
       {SERVICES.map((service) => (
@@ -131,19 +137,28 @@ export function ServicesSection() {
       ))}
 
       <section className="border-t border-line bg-cream-2">
-        <div className="mx-auto max-w-[1200px] px-6 py-[66px] text-center sm:px-10">
-          <div className="mb-4 font-mincho text-[70px] leading-none text-sage">
+        <div className="mx-auto max-w-[1240px] px-6 py-[76px] text-center sm:px-9">
+          <div className="mb-5 font-mincho text-[80px] leading-none text-sage">
             個
           </div>
-          <h3 className="m-0 mb-4 font-mincho text-[30px] font-medium">
+          <h2 className="m-0 mb-[18px] font-mincho text-[32px] font-medium">
             Every resident, an individual care plan
-          </h3>
+          </h2>
           <p className="mx-auto m-0 max-w-[640px] text-[14.5px] leading-[2] text-body">
             Before moving in, we sit down with each family to build a care plan
             around the person — their history, their preferences, and the
             support they truly need. It is reviewed together, regularly.
           </p>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-[1240px] px-6 py-[70px] text-center sm:px-9">
+        <Link
+          href={ROUTES.contact}
+          className="inline-block bg-ink px-9 py-4 text-[14px] tracking-[0.1em] text-cream no-underline"
+        >
+          Ask about care for your family →
+        </Link>
       </section>
     </>
   );

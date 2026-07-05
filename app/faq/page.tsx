@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { ROUTES } from "@/lib/site-routes";
 
 const FAQS = [
   {
     q: "How do I arrange a visit?",
-    a: "Simply send a request through the form on this page, or call us. We welcome visits Monday to Saturday, 9:00–17:00, and will find a time that suits your family.",
+    a: "Simply send a request through our contact page, or call us. We welcome visits Monday to Saturday, 9:00–17:00, and will find a time that suits your family.",
   },
   {
     q: "What levels of care do you provide?",
@@ -29,25 +31,29 @@ const FAQS = [
   },
 ];
 
-export function FaqSection() {
-  // Match the source design: the first item starts open.
+export default function FaqPage() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="faq" className="border-t border-line bg-cream-2">
-      <div className="mx-auto max-w-[900px] px-6 py-20 sm:px-10">
-        <div className="mb-5 text-center text-[12px] uppercase tracking-[0.3em] text-sage">
+    <>
+      <section className="mx-auto max-w-[900px] px-6 pt-[84px] pb-10 sm:px-9">
+        <div className="mb-[22px] text-center text-[12px] uppercase tracking-[0.3em] text-sage">
           FAQ · よくある質問
         </div>
-        <h2 className="m-0 mb-12 text-center font-mincho text-[40px] font-medium leading-[1.3]">
+        <h1 className="m-0 mb-[6px] text-center font-mincho text-[36px] font-medium leading-[1.25] sm:text-[44px]">
           Questions families often ask
-        </h2>
+        </h1>
+        <p className="m-0 text-center font-mincho text-[20px] tracking-[0.08em] text-muted">
+          ご家族からよくいただくご質問
+        </p>
+      </section>
 
-        <div className="border-t border-line-2">
+      <section className="mx-auto max-w-[900px] px-6 pt-5 pb-20 sm:px-9">
+        <div className="border-t border-line">
           {FAQS.map((item, i) => {
             const isOpen = open === i;
             return (
-              <div key={item.q} className="border-b border-line-2">
+              <div key={item.q} className="border-b border-line">
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? -1 : i)}
@@ -74,7 +80,24 @@ export function FaqSection() {
             );
           })}
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section className="border-t border-line bg-cream-2">
+        <div className="mx-auto max-w-[1240px] px-6 py-[66px] text-center sm:px-9">
+          <p className="m-0 mb-2 font-mincho text-[24px] text-body-2">
+            Still have a question?
+          </p>
+          <p className="m-0 mb-7 text-[14px] text-muted">
+            まずはお気軽にお問い合わせください。
+          </p>
+          <Link
+            href={ROUTES.contact}
+            className="inline-block bg-ink px-9 py-4 text-[14px] tracking-[0.1em] text-cream no-underline"
+          >
+            Contact us →
+          </Link>
+        </div>
+      </section>
+    </>
   );
 }

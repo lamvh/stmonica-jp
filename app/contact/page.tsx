@@ -1,23 +1,16 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { SectionHeading } from "@/components/section-heading";
 
 const inputClass =
   "w-full border border-line bg-cream px-[14px] py-3 font-gothic text-[14px] text-ink outline-none focus:border-sage";
-const labelClass =
-  "mb-2 block text-[12px] tracking-[0.08em] text-muted";
 
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
+function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <label className={labelClass}>{label}</label>
+      <label className="mb-2 block text-[12px] tracking-[0.08em] text-muted">
+        {label}
+      </label>
       {children}
     </div>
   );
@@ -32,9 +25,7 @@ function ContactForm() {
         <div className="mb-5 font-mincho text-[64px] leading-none text-sage">
           礼
         </div>
-        <h3 className="m-0 mb-3 font-mincho text-[26px] font-medium">
-          Thank you.
-        </h3>
+        <h2 className="m-0 mb-3 font-mincho text-[26px] font-medium">Thank you.</h2>
         <p className="mx-auto m-0 max-w-[360px] text-[14px] leading-[1.9] text-body">
           We&apos;ve received your request and will contact you within one
           business day to arrange your visit. ご連絡ありがとうございます。
@@ -109,18 +100,22 @@ function ContactDetail({
   );
 }
 
-export function ContactSection() {
+export default function ContactPage() {
   return (
     <>
-      <section id="contact" className="mx-auto max-w-[1200px] px-6 pt-20 pb-11 sm:px-10">
-        <SectionHeading
-          eyebrow="Contact & visit · お問い合わせ"
-          title="Come and see for yourself."
-          subtitle="まずは、ご見学から。"
-        />
+      <section className="mx-auto max-w-[1240px] px-6 pt-[84px] pb-11 sm:px-9">
+        <div className="mb-[22px] text-[12px] uppercase tracking-[0.3em] text-sage">
+          Contact &amp; visit · お問い合わせ
+        </div>
+        <h1 className="m-0 mb-[10px] max-w-[820px] font-mincho text-[40px] font-medium leading-[1.25] sm:text-[52px]">
+          Come and see for yourself.
+        </h1>
+        <p className="m-0 font-mincho text-[24px] tracking-[0.08em] text-muted">
+          まずは、ご見学から。
+        </p>
       </section>
 
-      <section className="mx-auto max-w-[1200px] px-6 pb-[90px] sm:px-10">
+      <section className="mx-auto max-w-[1240px] px-6 pb-[90px] sm:px-9">
         <div className="grid items-start gap-14 md:grid-cols-[1.3fr_1fr]">
           <div className="border border-line bg-cream-card p-6 sm:p-11">
             <ContactForm />

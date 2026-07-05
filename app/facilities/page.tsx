@@ -1,5 +1,12 @@
+import Link from "next/link";
 import { MediaFrame } from "@/components/media-frame";
-import { SectionHeading } from "@/components/section-heading";
+import { ROUTES } from "@/lib/site-routes";
+
+export const metadata = {
+  title: "Facilities · 施設のご案内 | St Monica",
+  description:
+    "A home of light, wood, and quiet — private rooms, shared spaces, and a garden designed for calm.",
+};
 
 const ROOMS = [
   {
@@ -45,7 +52,7 @@ const PEACE = [
 function AmenityList({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
-      <h3 className="m-0 mb-[22px] font-mincho text-[28px] font-medium">{title}</h3>
+      <h2 className="m-0 mb-[22px] font-mincho text-[28px] font-medium">{title}</h2>
       <div className="grid grid-cols-2 gap-x-7 gap-y-[14px] text-[14px] text-body-2">
         {items.map((item) => (
           <div key={item} className="border-t border-line-2 pt-3">
@@ -57,22 +64,23 @@ function AmenityList({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-export function FacilitiesSection() {
+export default function FacilitiesPage() {
   return (
     <>
-      <section
-        id="facilities"
-        className="mx-auto max-w-[1200px] px-6 pt-20 pb-11 sm:px-10"
-      >
-        <SectionHeading
-          eyebrow="Facilities · 施設のご案内"
-          title="A home of light, wood, and quiet."
-          subtitle="光と木と、静けさの住まい。"
-        />
+      <section className="mx-auto max-w-[1240px] px-6 pt-[84px] pb-11 sm:px-9">
+        <div className="mb-[22px] text-[12px] uppercase tracking-[0.3em] text-sage">
+          Facilities · 施設のご案内
+        </div>
+        <h1 className="m-0 mb-[10px] max-w-[820px] font-mincho text-[40px] font-medium leading-[1.25] sm:text-[52px]">
+          A home of light, wood, and quiet.
+        </h1>
+        <p className="m-0 font-mincho text-[24px] tracking-[0.08em] text-muted">
+          光と木と、静けさの住まい。
+        </p>
       </section>
 
       {/* photo mosaic */}
-      <section className="mx-auto max-w-[1200px] px-6 sm:px-10">
+      <section className="mx-auto max-w-[1240px] px-6 sm:px-9">
         <div className="grid grid-cols-2 gap-[14px] md:grid-cols-[2fr_1fr_1fr] md:grid-rows-[220px_220px]">
           <MediaFrame
             src="/images/fac-garden.png"
@@ -113,10 +121,10 @@ export function FacilitiesSection() {
       </section>
 
       {/* rooms */}
-      <section className="mx-auto max-w-[1200px] px-6 pt-[60px] pb-10 sm:px-10">
-        <h3 className="m-0 mb-[6px] font-mincho text-[30px] font-medium">
+      <section className="mx-auto max-w-[1240px] px-6 pt-[60px] pb-10 sm:px-9">
+        <h2 className="m-0 mb-[6px] font-mincho text-[34px] font-medium">
           Your room · お部屋
-        </h3>
+        </h2>
         <p className="m-0 mb-9 text-[14px] tracking-[0.08em] text-muted">
           18 private rooms, each with garden light.
         </p>
@@ -130,12 +138,12 @@ export function FacilitiesSection() {
                 src={room.src}
                 alt=""
                 gradient={room.gradient}
-                className="h-[170px]"
+                className="h-[180px]"
               />
               <div className="px-[26px] pt-6 pb-7">
-                <h4 className="m-0 mb-1 font-mincho text-[20px] font-medium">
+                <h3 className="m-0 mb-1 font-mincho text-[20px] font-medium">
                   {room.title}
-                </h4>
+                </h3>
                 <p className="m-0 mb-3 text-[12px] tracking-[0.1em] text-muted">
                   {room.spec}
                 </p>
@@ -150,10 +158,19 @@ export function FacilitiesSection() {
 
       {/* amenities */}
       <section className="border-t border-line bg-cream-2">
-        <div className="mx-auto grid max-w-[1200px] gap-14 px-6 py-[66px] sm:px-10 md:grid-cols-2">
+        <div className="mx-auto grid max-w-[1240px] gap-14 px-6 py-[70px] sm:px-9 md:grid-cols-2">
           <AmenityList title="Shared spaces · 共用" items={SHARED} />
           <AmenityList title="Peace of mind · 安心" items={PEACE} />
         </div>
+      </section>
+
+      <section className="mx-auto max-w-[1240px] px-6 py-[70px] text-center sm:px-9">
+        <Link
+          href={ROUTES.gallery}
+          className="border-b border-sage pb-[3px] text-[14px] text-sage no-underline"
+        >
+          See the full gallery →
+        </Link>
       </section>
     </>
   );
