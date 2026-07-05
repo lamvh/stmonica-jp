@@ -1,26 +1,56 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ===== St Monica design tokens ===== */
+@theme {
+  --color-cream: #f4f0e6;      /* page background */
+  --color-cream-2: #ede7d8;    /* alternating section background */
+  --color-cream-card: #fbf8f1; /* cards */
+  --color-line: #e2dbc9;       /* hairline borders */
+  --color-line-2: #ddd5c2;     /* softer hairline */
+  --color-ink: #23262b;        /* headings / strong text */
+  --color-body: #4a4639;       /* body copy */
+  --color-body-2: #33362f;     /* emphasised body copy */
+  --color-muted: #8a8474;      /* captions / labels */
+  --color-sage: #5e7a5a;       /* accent */
+  --color-footdim: #a9a390;    /* footer body */
+  --color-footlink: #d8d2c2;   /* footer links */
+
+  --font-mincho: var(--font-zen-mincho), serif;
+  --font-gothic: var(--font-zen-gothic), sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 74px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-gothic);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a:hover {
+  opacity: 0.72;
+}
+
+/* Top-nav link underline behaviour from the source design */
+.navlink {
+  color: var(--color-muted);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s;
+}
+.navlink:hover {
+  color: var(--color-ink);
+  opacity: 1;
+  border-bottom-color: var(--color-sage);
 }
