@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 type MediaFrameProps = {
   /** Path under /public, e.g. "/images/hero.png". */
@@ -20,9 +20,13 @@ const DEFAULT_GRADIENT = "linear-gradient(160deg,#d9d3c0,#c4bca4)";
 
 /**
  * Image inside a fixed frame. The design layers photos over warm beige
- * gradients; the photo fades in only once it has successfully loaded, so a
- * missing file leaves just the gradient + caption — no broken-image artifact.
- * Drop matching files into /public/images to enable the photography.
+ * gradients; the photo fades in once it has loaded, so a missing file leaves
+ * just the gradient + caption — no broken-image artifact.
+ *
+ * The `onLoad` event alone is unreliable: a server-rendered or cached image can
+ * finish loading before hydration attaches the handler, so we also check
+ * `img.complete` on mount and mark it loaded — otherwise the photo would stay
+ * invisible and only the gradient would show.
  */
 export function MediaFrame({
   src,
@@ -33,7 +37,13 @@ export function MediaFrame({
   className = "",
   style,
 }: MediaFrameProps) {
+  const imgRef = useRef<HTMLImageElement>(null);
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth > 0) setLoaded(true);
+  }, [src]);
 
   return (
     <div
@@ -41,6 +51,7 @@ export function MediaFrame({
       style={{ background: gradient, ...style }}
     >
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         onLoad={() => setLoaded(true)}
